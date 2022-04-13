@@ -1,0 +1,59 @@
+body{
+    font-family: 'Nunito', sans-serif;
+}
+nav{
+  margin: 0;
+  width: 100%;
+  background: rgb(128,218,202);
+  background: -webkit-linear-gradient(left, rgba(128,218,202,1) 0%, rgba(210,200,75,1) 100%);
+  background: -o-linear-gradient(left, rgba(128,218,202,1) 0%, rgba(210,200,75,1) 100%);
+  background: linear-gradient(to right, rgba(128,218,202,1) 0%, rgba(210,200,75,1) 100%);
+  font-size: 20px;
+}
+
+.botn:hover{
+  box-shadow: 0 8px 65px -5px black;
+  color: black;
+}
+
+.botn{
+  font-family: 'Nunito', sans-serif;
+  letter-spacing: 1px;
+  font-size: 15px;
+  line-height: 30px;
+  text-transform: uppercase;
+  background-color: rgb(128,218,202);
+  color: black;
+  border: none;
+  border-radius: 10px;
+  min-width: 20%;
+  box-shadow: 0 10px 60px -10px grey;
+  cursor: pointer;
+  transition: all 5s cubic-bezier(0.03, 0.98, 0.52, 0.99);
+  outline: none;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 10px;
+}
+.btn-group{
+  margin-left: 30%;
+}
+.input-group{
+  margin-right: 30%;
+}
+.greeting{
+  margin-top: 30px;
+}
+.money{
+  margin-top: 50px;
+}
+.table-KL{
+  margin-top: 50px;
+}
+
+
+.card{
+  margin-top: 20px;
+  display: flex;
+}
