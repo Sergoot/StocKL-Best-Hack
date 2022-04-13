@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="stocks">
+    {% for info in all_info %}
+    <span>{{info.name}}:</span>
+    <h3 data-name="{{info.name}}">{{info.price}}</h3>
+{% endfor %}
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+
+function get_data() {
+        $.ajax({
+        url: '{% url 'main' %}',
+        datatype: 'json',
+        type: 'GET',
+        success: function (data) {
+             console.log(data);
+             for (var key in data) {
+             console.log(key);
+             console.log(data[key]);
+                document.querySelector(`[data-name='${key}']`).innerHTML = data[key];
+                }
+        }
+    });
+};
+        $(document).ready(function(){
+        setInterval(get_data,300000);
+        });
+
+</script>
+
+
+</body>
+</html>

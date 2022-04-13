@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Пополнить баланс</h1>
+<h3>Баланс:{{user.money}}</h3>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit">
+</form>
+</body>
+</html>

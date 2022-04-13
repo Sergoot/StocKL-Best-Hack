@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Баланс: {{user.money}}</h1>
+<h2>Общая стоимость всех акций:{{total_price}}</h2>
+{% for portfolio in portfolio_list %}
+
+    <div>
+        <h1>{{portfolio.stock}}</h1>
+        <h4>{{portfolio.quantity}}</h4>
+        <h4>Общая стоимость: {{portfolio.total_price}}</h4>
+        </div>
+{% endfor %}
+</body>
+</html>
