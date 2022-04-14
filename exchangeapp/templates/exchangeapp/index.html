@@ -24,31 +24,35 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
-var Data = $.ajax({
-  type: "GET",
-  dataType: "json",
-  url: '{% url 'detail' stock.id %}',
-  async: false
-}).responseText;
-console.log(Data)
-
 function drawChart() {
-var data = google.visualization.arrayToDataTable($.parseJSON(Data), true);
+        var Data = $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: '{% url 'detail' stock.id %}',
+            async: false
 
-var options = {
-fontSize: 12,
-legend:'none',
-candlestick: {
-fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
-risingColor: { strokeWidth: 0, fill: '#0f9d58' }, // green
+}).responseText;
+        console.log(Data);
+        var data = google.visualization.arrayToDataTable($.parseJSON(Data), true);
 
-},
-colors: ['#999']
-};
+        var options = {
+        fontSize: 12,
+        legend:'none',
+        candlestick: {
+        fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+        risingColor: { strokeWidth: 0, fill: '#0f9d58' }, // green
 
-var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
-chart.draw(data, options);
-}
+        },
+        colors: ['#999']
+        };
+
+        var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        }
+
+        $(document).ready(function(){
+        setInterval(drawChart,300000);
+        });
 </script>
 
 </head>
@@ -92,7 +96,6 @@ chart.draw(data, options);
 </div>
 </main>
 
-  <script src="script.js"></script>
 
 </body>
 
