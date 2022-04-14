@@ -1,6 +1,8 @@
+html { overflow-x: hidden; }
 body{
     font-family: 'Nunito', sans-serif;
 }
+
 nav{
   margin: 0;
   width: 100%;
@@ -10,7 +12,6 @@ nav{
   background: linear-gradient(to right, rgba(128,218,202,1) 0%, rgba(210,200,75,1) 100%);
   font-size: 20px;
 }
-
 .botn:hover{
   box-shadow: 0 8px 65px -5px black;
   color: black;
@@ -20,8 +21,7 @@ nav{
   font-family: 'Nunito', sans-serif;
   letter-spacing: 1px;
   font-size: 15px;
-  line-height: 30px;
-  text-transform: uppercase;
+  line-height: 20px;
   background-color: rgb(128,218,202);
   color: black;
   border: none;
@@ -31,29 +31,50 @@ nav{
   cursor: pointer;
   transition: all 5s cubic-bezier(0.03, 0.98, 0.52, 0.99);
   outline: none;
-  position: relative;
   text-decoration: none;
   text-transform: uppercase;
   padding: 10px;
 }
+.btn{
+  letter-spacing: 1px;
+  font-size: 22px;
+  line-height: 30px;
+  text-transform: uppercase;
+  background-color: rgb(128,218,202);
+  color: black;
+  border: none;
+  border-radius: 10px;
+  min-width: 20%;
+  padding: 0 24px;
+  box-shadow: 0 10px 60px -10px;
+  cursor: pointer;
+  transition: all 5s cubic-bezier(0.03, 0.98, 0.52, 0.99);
+  outline: none;
+  margin: auto;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin-top: 5%
+}
 .btn-group{
-  margin-left: 30%;
+  margin-left: 35%;
 }
 .input-group{
-  margin-right: 30%;
+  margin-right: 35%;
 }
-.greeting{
-  margin-top: 30px;
-}
-.money{
-  margin-top: 50px;
-}
-.table-KL{
-  margin-top: 50px;
+.form-control{
+  border-radius: 20px;
+
 }
 
-
-.card{
+.buttons{
   margin-top: 20px;
-  display: flex;
+  transform: translate(25%, 0);
+}
+.col{
+    width: 20vw;
+}
+.container{
+margin-left: 30vw;
+margin-bottom: 5vh;
 }

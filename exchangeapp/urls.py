@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 urlpatterns = [
-    path('detail/<int:stock_id>', views.detail_page, name='detail_page'),
+    path('detail/<str:stock_name>', views.detail_page, name='detail_page'),
     path('detail/<int:stock_id>/response', views.detail, name='detail'),
     path('', views.main_page, name='main_page'),
     path('main_course', views.main, name='main'),

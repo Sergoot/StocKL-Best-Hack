@@ -6,8 +6,18 @@ from .models import CustomUser
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label='Почта')
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'id': 'exampleInputEmail1',
+        'class': 'form-control',
+        'placeholder': 'example@box.com',
+    }
+    ))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'type': 'password',
+        'class': 'form-control',
+        'id': 'exampleInputPassword1'
+    }
+    ))
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -27,7 +37,6 @@ class CustomUserCreationForm(UserCreationForm):
             attrs={
                 'id':'exampleInputEmail1',
                 'class': 'form-control',
-                'placeholder': 'Введите ваш комментарий',
             }),
             'password1': PasswordInput(
                 attrs={
@@ -44,7 +53,10 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class ValueForm(forms.Form):
-    value = forms.FloatField(widget=NumberInput())
+    value = forms.FloatField(widget=NumberInput(attrs={
+        'id': 'InputValue',
+        'class': 'form-control',
+    }))
 
 
 # class BuyForm(forms.Form):

@@ -23,11 +23,11 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect(vgames.main)
+                    return redirect(vgames.main_page)
                 else:
-                    return HttpResponse('Disabled users')
+                    return HttpResponse('Пользователь заблокирован')
             else:
-                return HttpResponse('Invalid login')
+                return HttpResponse('Данные введены неверно. Проверьте логин или пароль')
     else:
         form = LoginForm()
     return render(request, 'users/login.html', {'form': form})

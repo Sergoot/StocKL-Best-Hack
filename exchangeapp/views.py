@@ -8,28 +8,29 @@ from .models import Stock, Portfolio
 
 
 #Страница детального отображения акции с графиком
-def detail_page(request, stock_id):
+def detail_page(request, stock_name):
     form = ValueForm()
-    stock = get_object_or_404(Stock,pk=stock_id)
+    stock = get_object_or_404(Stock, name=stock_name)
     url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=5min&apikey=X3X08NCFX3EY2HW3'
+    response = requests.get(url.format(stock.name)).json()
     try:
-        response = requests.get(url.format(stock.name)).json()
+        prices = response['Time Series (5min)']
     except KeyError:
         time.sleep(15)
         response = requests.get(url.format(stock.name)).json()
-    prices = response['Time Series (5min)']
+        prices = response['Time Series (5min)']
     price = prices[list(prices.keys())[0]][list(prices[list(prices.keys())[0]].keys())[3]]
     stock.price = float(price)
     stock.save()
     try:
-        portfolio = Portfolio.objects.get(user=request.user, stock=stock_id)
+        portfolio = Portfolio.objects.get(user=request.user, stock__name=stock_name)
         context = {'stock': stock, 'price': price, 'buy_form': form, 'sell_form': form, 'portfolio': portfolio}
     except Portfolio.DoesNotExist:
         context = {'stock': stock, 'price': price,'buy_form': form, 'sell_form': form}
-    return render(request, 'exchangeapp/detail.html', context)
+    return render(request, 'exchangeapp/index.html', context)
 
 #детальный респонз
-@require_POST
+@require_GET
 def detail(request, stock_id):
     print('ФУНКЦИЯ СРАБОТАЛА')
     api_key = 'X3X08NCFX3EY2HW3'
@@ -40,29 +41,19 @@ def detail(request, stock_id):
     all_stocks = []
     all_s = {}
 
-    try:
-        response = requests.get(url.format(stock.name)).json()
-    except KeyError:
-        time.sleep()
-        response = requests.get(url.format(stock.name)).json()
+    response = requests.get(url.format(stock.name)).json()
+    print('респонз прошел')
     data_all = []
     for time, price in response['Time Series (5min)'].items():
         open = price['1. open']
         high = price['2. high']
         low = price['3. low']
         close = price['4. close']
-        price_data = {
-                'time':time,
-                'open': open,
-                'high': high,
-                'low': low,
-                'close': close,
-            }
         data = [time, float(low), float(open), float(close), float(high)]
         data_all.append(data)
         all_s.update({time: data})
         data_all.sort(reverse=False)
-    return JsonResponse(data_all[:40], safe=False)
+    return JsonResponse(data_all[40:], safe=False)
 
 #главная страница
 def main_page(request):
@@ -71,11 +62,13 @@ def main_page(request):
     stocks = Stock.objects.all()
     for stock in stocks:
         print('-----------------------------------------------------------------------------------------------------------------------------------------')
+        response = requests.get(url.format(stock.name)).json()
         try:
-            response = requests.get(url.format(stock.name)).json()
+            price = response['Time Series (5min)']
         except KeyError:
-            time.sleep(15)
+            url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=5min&apikey=FJEPU2CGUIUM6BRG'
             response = requests.get(url.format(stock.name)).json()
+            price = response['Time Series (5min)']
         price = response['Time Series (5min)']
         last_r = response['Meta Data']['3. Last Refreshed']
         dict = {
@@ -125,7 +118,7 @@ def buy(request,stock_id,user_id):
     portfolio.quantity = int(portfolio.quantity)+int(quantity)
     portfolio.total_price = float(portfolio.total_price)+float(stock.price)*int(quantity)
     portfolio.save()
-    return redirect(detail_page, stock_id)
+    return redirect(detail_page, stock.name)
 
 
 #Продажа акций
@@ -145,7 +138,7 @@ def sell(request,stock_id,user_id):
     portfolio.quantity = int(portfolio.quantity)-int(quantity)
     portfolio.total_price = float(portfolio.total_price) - float(stock.price) * int(quantity)
     portfolio.save()
-    return redirect(detail_page, stock_id)
+    return redirect(detail_page, stock.name)
 
 
 #Страница с портфелем
@@ -155,7 +148,7 @@ def portfolio_page(request):
     for port in portfolio:
         total_price += port.total_price
     context = {'portfolio_list': portfolio, 'total_price': total_price}
-    return render(request, 'exchangeapp/portfolio.html', context)
+    return render(request, 'exchangeapp/prof.html', context)
 
 
 

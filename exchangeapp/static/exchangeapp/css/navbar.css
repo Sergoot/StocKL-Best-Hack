@@ -1,0 +1,9 @@
+nav{
+  margin: 0;
+  width: 100%;
+  background: rgb(128,218,202);
+  background: -webkit-linear-gradient(left, rgba(128,218,202,1) 0%, rgba(210,200,75,1) 100%);
+  background: -o-linear-gradient(left, rgba(128,218,202,1) 0%, rgba(210,200,75,1) 100%);
+  background: linear-gradient(to right, rgba(128,218,202,1) 0%, rgba(210,200,75,1) 100%);
+  font-size: 20px;
+}

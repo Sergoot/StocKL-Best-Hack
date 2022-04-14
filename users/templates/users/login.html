@@ -6,21 +6,34 @@
 <head>
     <meta charset="UTF-8">
     {% block static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'users/css/login.css' %}">
     {% endblock %}
     <title>Title</title>
 </head>
 <body>
 <div class="login">
-<h1>Вход в аккаунт</h1>
-    <p>Пожалуйста, войдите в аккаунт, используя данную форму.</p>
-<form action="." method="post">
-        {{ form.email}}
-        {{ form.password}}
-        {% csrf_token %}
-        <p><button id="btn-log" type="submit" class="btn btn-outline-info btn-lg">Создать аккаунт</button></p>
-    </form>
+    <form class="all" action="" method="post">
+      {% csrf_token %}
+      <div class="profile">
+          <center><h1>Вход в аккаунт</h1></center>
+          <div сlass="fields">
+          <div class="mb-3">
+   <label for="exampleInputEmail1" class="form-label">Email</label>
+    {{form.email}}
+ </div>
+ <div class="mb-3">
+   <label for="exampleInputPassword1" class="form-label">Пароль</label>
+     {{ form.password}}
+ </div>
+              <p>Нет аккаунта? <a style="color: rgb(128,218,202)" href="{% url 'users:register' %}">Зарегистрироваться</a></p>
+ <button type="submit" class="btn btn-primary">Войти</button>
+        </div>
+      </div>
+  </form>
+
+
     </div>
 </body>
 </html>

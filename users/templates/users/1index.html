@@ -15,23 +15,21 @@
   <form class="all" action="" method="post">
       {% csrf_token %}
       <div class="profile">
-        <h1>Регистрация</h1>
+        <center><h1>Регистрация</h1></center>
         <div сlass="fields">
           <div class="mb-3">
-   <label for="exampleInputEmail1" class="form-label">email</label>
+   <label for="exampleInputEmail1" class="form-label">Email</label>
     {{user_form.email}}
  </div>
  <div class="mb-3">
-   <label for="exampleInputPassword1" class="form-label">Password</label>
+   <label for="exampleInputPassword1" class="form-label">Пароль</label>
      {{user_form.password1}}
-
-
  </div>
  <div class="mb-3">
-   <label for="exampleInputPassword1" class="form-label">Repeat password</label>
+   <label for="exampleInputPassword1" class="form-label">Повторите пароль</label>
     {{user_form.password2}}
  </div>
- <button type="submit" class="btn btn-primary">Submit</button>
+ <button type="submit" class="btn btn-primary">Регистрация</button>
         </div>
       </div>
   </form>

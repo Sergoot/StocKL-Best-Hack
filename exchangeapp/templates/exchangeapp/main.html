@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load static %}
+{% include "exchangeapp/navbar.html"%}
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -8,13 +10,13 @@
 
   <link  rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" href="main-style.css">
 
+  <link rel="stylesheet" type="text/css" href="{% static 'exchangeapp/css/main-style.css' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap" rel="stylesheet">
-
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -23,32 +25,36 @@
   <title>KL-stock</title>
 </head>
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">KL-stock</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Акции</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Профиль</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-    <div class="block">
-      <div class="body">
-        <center><h3 class="title">Название акции</h3></center>
-        <center><h5 class="price">Цена акции$</h5></center>
-        <a href="#" class="btn">Подробнее</a>
-      </div>
+  {% for info in all_info %}
+    <div class="card">
+    <div class="card-body">
+    <center><h3 class="card-title">{{info.name}}</h3></center>
+    <center><h4 class="card-text" data-name="{{info.name}}">{{info.price}}$</h4></center>
+    <div class="boton"><a href="{% url 'detail_page' info.name %}" class="botn">Подробнее</a></div>
     </div>
+    </div>
+{% endfor %}
+    <script>
+
+function get_data() {
+        $.ajax({
+        url: '{% url 'main' %}',
+        datatype: 'json',
+        type: 'GET',
+        success: function (data) {
+             console.log(data);
+             for (var key in data) {
+             console.log(key);
+             console.log(data[key]);
+                document.querySelector(`[data-name='${key}']`).innerHTML = data[key];
+                }
+        }
+    });
+};
+        $(document).ready(function(){
+        setInterval(get_data,300000);
+        });
+
+</script>
 </body>
 </html>
