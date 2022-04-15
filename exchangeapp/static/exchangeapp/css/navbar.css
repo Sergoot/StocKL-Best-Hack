@@ -7,3 +7,6 @@ nav{
   background: linear-gradient(to right, rgba(128,218,202,1) 0%, rgba(210,200,75,1) 100%);
   font-size: 20px;
 }
+#logout{
+    margin-left: 72vw;
+}

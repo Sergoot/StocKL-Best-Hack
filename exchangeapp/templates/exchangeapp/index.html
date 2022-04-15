@@ -3,7 +3,7 @@
 {% load static %}
 {% include "exchangeapp/navbar.html"%}
 <head>
-  <title>KL-stock</title>
+  <title>{{stock.name}}</title>
   <meta charset="UTF-8">
   <meta name="description" content="Описание страницы" />
   <meta charset="utf-8" />
@@ -30,8 +30,8 @@ function drawChart() {
             dataType: "json",
             url: '{% url 'detail' stock.id %}',
             async: false
-
 }).responseText;
+        document.getElementById('price').innerHTML = Data.slice(-1).slice(3);
         console.log(Data);
         var data = google.visualization.arrayToDataTable($.parseJSON(Data), true);
 
@@ -71,7 +71,7 @@ function drawChart() {
       <h4>У вас: {{portfolio.quantity}} шт.</h4>
         <h3>Общая стоимость: {{portfolio.total_price}}$</h3>
         <h3>Баланс: {{user.money}}$</h3>
-    <h3>Цена: {{price}}$</h3>
+    <h3 id="price">Цена: {{price}}$</h3>
     </center>
 
     <div class="container">

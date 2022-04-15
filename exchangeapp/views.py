@@ -19,8 +19,8 @@ def detail_page(request, stock_name):
         time.sleep(15)
         response = requests.get(url.format(stock.name)).json()
         prices = response['Time Series (5min)']
-    price = prices[list(prices.keys())[0]][list(prices[list(prices.keys())[0]].keys())[3]]
-    stock.price = float(price)
+    price = prices[list(prices.keys())[0]][list(prices[list(prices.keys())[0]].keys())[3]] # выбирает последнюю обновленную цену
+    stock.price = float(price)                                                             # и записывает её как настоящую цену
     stock.save()
     try:
         portfolio = Portfolio.objects.get(user=request.user, stock__name=stock_name)
@@ -29,7 +29,7 @@ def detail_page(request, stock_name):
         context = {'stock': stock, 'price': price,'buy_form': form, 'sell_form': form}
     return render(request, 'exchangeapp/index.html', context)
 
-#детальный респонз
+#детальный ответ
 @require_GET
 def detail(request, stock_id):
     print('ФУНКЦИЯ СРАБОТАЛА')
@@ -66,7 +66,7 @@ def main_page(request):
         try:
             price = response['Time Series (5min)']
         except KeyError:
-            url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=5min&apikey=FJEPU2CGUIUM6BRG'
+            time.sleep(15)
             response = requests.get(url.format(stock.name)).json()
             price = response['Time Series (5min)']
         price = response['Time Series (5min)']
@@ -86,11 +86,7 @@ def main(request):
         url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=5min&apikey=FJEPU2CGUIUM6BRG'
         stocks = Stock.objects.all().order_by('name')
         for stock in stocks:
-            try:
-                response = requests.get(url.format(stock.name)).json()
-            except KeyError:
-                time.sleep(15)
-                response = requests.get(url.format(stock.name)).json()
+            response = requests.get(url.format(stock.name)).json()
             print(response)
             price = response['Time Series (5min)']
             last_r = response['Meta Data']['3. Last Refreshed']

@@ -8,12 +8,12 @@ from exchangeapp import views as vgames
 # Create your views here.
 from .models import CustomUser
 
-
+# выход из аккаунта/текущей сессии. Перебрасывате на страницу входа
 def logout_view(request):
     logout(request)
-    return redirect(vgames.main_page)
+    return redirect('/')
 
-
+# Вход пользователя в аккаунт
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -29,10 +29,13 @@ def user_login(request):
             else:
                 return HttpResponse('Данные введены неверно. Проверьте логин или пароль')
     else:
-        form = LoginForm()
+        if request.user.is_authenticated:
+            return redirect(vgames.main_page)
+        else:
+            form = LoginForm()
     return render(request, 'users/login.html', {'form': form})
 
-
+# регистрация нового пользователя
 def register(request):
     if request.method == 'POST':
         user_form = CustomUserCreationForm(request.POST)
@@ -48,7 +51,7 @@ def register(request):
         user_form = CustomUserCreationForm()
     return render(request, 'users/1index.html', {'user_form': user_form})
 
-
+# логика пополнения баланса пользователя
 def money(request, pk):
     user = CustomUser.objects.get(pk=pk)
     if request.method == 'GET':
@@ -63,7 +66,7 @@ def money(request, pk):
         context = {'value':money_value,'user': user_pk}
         return render(request,'users/money_success.html',context)
 
-
+# текущий портфель пользователя
 def portfolio_page(request):
     portfolio = Portfolio.objects.filter(user=request.user)
     context = {'portfolio_list': portfolio}
